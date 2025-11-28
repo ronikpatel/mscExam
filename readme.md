@@ -1,2 +1,2 @@
 hello 
-MSC Students
+MSC IT Students
