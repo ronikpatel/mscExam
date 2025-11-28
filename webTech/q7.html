@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Gallery with Hover & jQuery Slideshow</title>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        /* ---------- GALLERY GRID ---------- */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.4s ease-in-out;
+        }
+
+        /* Hover Effect */
+        .gallery img:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* ---------- SLIDESHOW MODAL ---------- */
+        #slideshowModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        #slideImg {
+            max-width: 70%;
+            max-height: 70%;
+            border-radius: 12px;
+            box-shadow: 0 0 25px #000;
+        }
+
+        /* Navigation Buttons */
+        .navBtn {
+            position: absolute;
+            top: 50%;
+            color: white;
+            font-size: 45px;
+            cursor: pointer;
+            transform: translateY(-50%);
+            user-select: none;
+        }
+
+        #prev { left: 5%; }
+        #next { right: 5%; }
+
+        /* Close Button */
+        #closeModal {
+            position: absolute;
+            top: 25px;
+            right: 40px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Image Gallery with Hover Effects & jQuery Slideshow</h2>
+
+<!-- ---------- IMAGE GALLERY ---------- -->
+<div class="gallery">
+    <img src="https://picsum.photos/id/1015/400/300">
+    <img src="https://picsum.photos/id/1025/400/300">
+    <img src="https://picsum.photos/id/1035/400/300">
+    <img src="https://picsum.photos/id/1045/400/300">
+    <img src="https://picsum.photos/id/1055/400/300">
+    <img src="https://picsum.photos/id/1065/400/300">
+</div>
+
+<!-- ---------- SLIDESHOW MODAL ---------- -->
+<div id="slideshowModal">
+    <span id="closeModal">&times;</span>
+    <span id="prev" class="navBtn">&#10094;</span>
+    <img id="slideImg" src="">
+    <span id="next" class="navBtn">&#10095;</span>
+</div>
+
+<script>
+$(document).ready(function () {
+
+    let galleryImages = $(".gallery img");
+    let currentIndex = 0;
+
+    // Open slideshow when clicking an image
+    galleryImages.click(function () {
+        currentIndex = galleryImages.index(this);
+        showImage(currentIndex);
+        $("#slideshowModal").fadeIn(300);
+    });
+
+    // Set slideshow image
+    function showImage(index) {
+        $("#slideImg").attr("src", galleryImages.eq(index).attr("src"));
+    }
+
+    // Next image
+    $("#next").click(function () {
+        currentIndex = (currentIndex + 1) % galleryImages.length;
+        showImage(currentIndex);
+    });
+
+    // Previous image
+    $("#prev").click(function () {
+        currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+        showImage(currentIndex);
+    });
+
+    // Close slideshow
+    $("#closeModal").click(function () {
+        $("#slideshowModal").fadeOut(300);
+    });
+
+    // Auto slideshow every 3 seconds
+    setInterval(function () {
+        if ($("#slideshowModal").is(":visible")) {
+            currentIndex = (currentIndex + 1) % galleryImages.length;
+            showImage(currentIndex);
+        }
+    }, 3000);
+
+});
+</script>
+
+</body>
+</html>

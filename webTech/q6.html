@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Responsive Navbar with jQuery Animation</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        /* Optional dropdown style */
+        .dropdown-menu {
+            display: none; /* Hide initially for jQuery animation */
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================== NAVBAR START ================== -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">MySite</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarMenu">
+
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+
+                <!-- Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown">
+                        Services
+                    </a>
+
+                    <ul class="dropdown-menu bg-dark border-0" aria-labelledby="servicesDropdown">
+                        <li><a class="dropdown-item text-white" href="#">Web Design</a></li>
+                        <li><a class="dropdown-item text-white" href="#">App Development</a></li>
+                        <li><a class="dropdown-item text-white" href="#">Marketing</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<!-- ================== NAVBAR END ================== -->
+
+<script>
+$(document).ready(function () {
+
+    // jQuery Dropdown Animation
+    $(".dropdown").hover(
+        function () {
+            $(this).find(".dropdown-menu")
+                .stop(true, true)
+                .slideDown(200);   // animate dropdown
+        },
+        function () {
+            $(this).find(".dropdown-menu")
+                .stop(true, true)
+                .slideUp(200);     // animate close
+        }
+    );
+
+    // Allow click toggle on mobile
+    $(".dropdown-toggle").click(function (e) {
+        e.preventDefault();
+        $(this).next(".dropdown-menu").slideToggle(200);
+    });
+
+});
+</script>
+
+</body>
+</html>

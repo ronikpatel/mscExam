@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Admission Form</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+        .container-box {
+            max-width: 650px;
+            border: 1px solid #ddd;
+            padding: 25px;
+            border-radius: 10px;
+            background: #fafafa;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+
+<div class="container">
+    <div class="container-box shadow">
+        <h2 class="mb-4 text-center">Student Admission Form</h2>
+
+        <form id="admissionForm">
+
+            <!-- Full Name -->
+            <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <input type="text" id="name" class="form-control">
+                <span id="nameError" class="error"></span>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="text" id="email" class="form-control">
+                <span id="emailError" class="error"></span>
+            </div>
+
+            <!-- Mobile Number -->
+            <div class="mb-3">
+                <label class="form-label">Mobile Number</label>
+                <input type="text" id="mobile" class="form-control">
+                <span id="mobileError" class="error"></span>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="mb-3">
+                <label class="form-label">Date of Birth</label>
+                <input type="date" id="dob" class="form-control">
+                <span id="dobError" class="error"></span>
+            </div>
+
+            <!-- Address -->
+            <div class="mb-3">
+                <label class="form-label">Address</label>
+                <textarea id="address" class="form-control" rows="3"></textarea>
+                <span id="addressError" class="error"></span>
+            </div>
+
+            <!-- Gender -->
+            <div class="mb-3">
+                <label class="form-label d-block">Gender</label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" value="Male">
+                    <label class="form-check-label">Male</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" value="Female">
+                    <label class="form-check-label">Female</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" value="Other">
+                    <label class="form-check-label">Other</label>
+                </div>
+
+                <span id="genderError" class="error d-block"></span>
+            </div>
+
+            <!-- Course -->
+            <div class="mb-3">
+                <label class="form-label">Course Selection</label>
+                <select id="course" class="form-control">
+                    <option value="">Select Course</option>
+                    <option>BCA</option>
+                    <option>BBA</option>
+                    <option>MCA</option>
+                    <option>MBA</option>
+                </select>
+                <span id="courseError" class="error"></span>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" id="password" class="form-control">
+                <span id="passwordError" class="error"></span>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary px-4">Submit</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+$(document).ready(function () {
+
+    // Validation Functions
+    function validateName() {
+        let name = $("#name").val().trim();
+        if (name === "") {
+            $("#nameError").text("Full name is required.");
+            return false;
+        }
+        $("#nameError").text("");
+        return true;
+    }
+
+    function validateEmail() {
+        let email = $("#email").val().trim();
+        let pattern = /^[^ ]+@[^ ]+\.[a-z]{2,6}$/;
+
+        if (email === "") {
+            $("#emailError").text("Email is required.");
+            return false;
+        } else if (!pattern.test(email)) {
+            $("#emailError").text("Enter a valid email.");
+            return false;
+        }
+
+        $("#emailError").text("");
+        return true;
+    }
+
+    function validateMobile() {
+        let mobile = $("#mobile").val().trim();
+        let pattern = /^[0-9]{10}$/;
+
+        if (mobile === "") {
+            $("#mobileError").text("Mobile number is required.");
+            return false;
+        } else if (!pattern.test(mobile)) {
+            $("#mobileError").text("Enter a valid 10-digit number.");
+            return false;
+        }
+
+        $("#mobileError").text("");
+        return true;
+    }
+
+    function validateDOB() {
+        if ($("#dob").val() === "") {
+            $("#dobError").text("Select your date of birth.");
+            return false;
+        }
+        $("#dobError").text("");
+        return true;
+    }
+
+    function validateAddress() {
+        if ($("#address").val().trim() === "") {
+            $("#addressError").text("Address cannot be empty.");
+            return false;
+        }
+        $("#addressError").text("");
+        return true;
+    }
+
+    function validateGender() {
+        if ($("input[name='gender']:checked").length === 0) {
+            $("#genderError").text("Select your gender.");
+            return false;
+        }
+        $("#genderError").text("");
+        return true;
+    }
+
+    function validateCourse() {
+        if ($("#course").val() === "") {
+            $("#courseError").text("Please select a course.");
+            return false;
+        }
+        $("#courseError").text("");
+        return true;
+    }
+
+    function validatePassword() {
+        let pass = $("#password").val().trim();
+        if (pass.length < 6) {
+            $("#passwordError").text("Password must be at least 6 characters.");
+            return false;
+        }
+        $("#passwordError").text("");
+        return true;
+    }
+
+    // Real-Time Validation
+    $("#name").blur(validateName);
+    $("#email").blur(validateEmail);
+    $("#mobile").blur(validateMobile);
+    $("#dob").blur(validateDOB);
+    $("#address").blur(validateAddress);
+    $("input[name='gender']").change(validateGender);
+    $("#course").change(validateCourse);
+    $("#password").keyup(validatePassword);
+
+    // Form Submit Validation
+    $("#admissionForm").submit(function (e) {
+        e.preventDefault();
+
+        if (
+            validateName() &&
+            validateEmail() &&
+            validateMobile() &&
+            validateDOB() &&
+            validateAddress() &&
+            validateGender() &&
+            validateCourse() &&
+            validatePassword()
+        ) {
+            alert("Form submitted successfully!");
+        }
+    });
+
+});
+</script>
+
+</body>
+</html>

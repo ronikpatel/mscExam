@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery Show Hide Toggle</title>
+
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        #myBox {
+            width: 250px;
+            height: 100px;
+            background: lightblue;
+            border: 2px solid #007BFF;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h3>jQuery Hide, Show, and Toggle</h3>
+
+    <button id="showBtn">Show</button>
+    <button id="hideBtn">Hide</button>
+    <button id="toggleBtn">Toggle</button>
+
+    <div id="myBox">This is the element!</div>
+
+    <script>
+        $(document).ready(function () {
+            
+            $("#showBtn").click(function () {
+                $("#myBox").show();
+            });
+
+            $("#hideBtn").click(function () {
+                $("#myBox").hide();
+            });
+
+            $("#toggleBtn").click(function () {
+                $("#myBox").toggle();
+            });
+
+        });
+    </script>
+
+</body>
+</html>

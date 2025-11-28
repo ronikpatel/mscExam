@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Form Validation</title>
+
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+
+        .box {
+            width: 350px;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Registration Form</h2>
+
+<div class="box">
+    <form id="regForm">
+        <label>Name:</label><br>
+        <input type="text" id="name" class="form-control"><br>
+        <span id="nameError" class="error"></span><br>
+
+        <label>Email:</label><br>
+        <input type="text" id="email" class="form-control"><br>
+        <span id="emailError" class="error"></span><br>
+
+        <label>Mobile:</label><br>
+        <input type="text" id="mobile" class="form-control"><br>
+        <span id="mobileError" class="error"></span><br>
+
+        <label>Password:</label><br>
+        <input type="password" id="password" class="form-control"><br>
+        <span id="passError" class="error"></span><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<script>
+$(document).ready(function() {
+
+    $("#regForm").submit(function(e) {
+        e.preventDefault(); // Stop form submission
+
+        let name = $("#name").val().trim();
+        let email = $("#email").val().trim();
+        let mobile = $("#mobile").val().trim();
+        let password = $("#password").val().trim();
+
+        let isValid = true;
+
+        // Clear old errors
+        $(".error").text("");
+
+        // Validate Name
+        if (name === "") {
+            $("#nameError").text("Please enter your name.");
+            isValid = false;
+        }
+
+        // Validate Email
+        let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,6}$/;
+        if (email === "") {
+            $("#emailError").text("Please enter your email.");
+            isValid = false;
+        } else if (!emailPattern.test(email)) {
+            $("#emailError").text("Please enter a valid email.");
+            isValid = false;
+        }
+
+        // Validate Mobile (10 digits)
+        let mobilePattern = /^[0-9]{10}$/;
+        if (mobile === "") {
+            $("#mobileError").text("Please enter your mobile number.");
+            isValid = false;
+        } else if (!mobilePattern.test(mobile)) {
+            $("#mobileError").text("Mobile number must be 10 digits.");
+            isValid = false;
+        }
+
+        // Validate Password
+        if (password === "") {
+            $("#passError").text("Please enter a password.");
+            isValid = false;
+        } else if (password.length < 6) {
+            $("#passError").text("Password must be at least 6 characters.");
+            isValid = false;
+        }
+
+        // If valid, submit or show success
+        if (isValid) {
+            alert("Registration Successful!");
+        }
+    });
+
+});
+</script>
+
+</body>
+</html>

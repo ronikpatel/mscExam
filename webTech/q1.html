@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Strength Checker</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body class="p-5">
+
+    <h3>Password Strength Checker</h3>
+
+    <div class="mb-3">
+        <label class="form-label">Enter Password:</label>
+        <input type="password" id="password" class="form-control" placeholder="Type password...">
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress mt-3">
+        <div id="strengthBar" class="progress-bar" role="progressbar" style="width: 0%;">
+            <!-- Text will appear here -->
+        </div>
+    </div>
+
+<script>
+$(document).ready(function() {
+    $("#password").on("keyup", function () {
+        let pwd = $(this).val();
+        let strengthBar = $("#strengthBar");
+
+        // Reset classes
+        strengthBar.removeClass("bg-danger bg-warning bg-success");
+
+        if (pwd.length === 0) {
+            strengthBar.css("width", "0%");
+            strengthBar.text("");
+        }
+        else if (pwd.length <= 6) {
+            strengthBar.addClass("bg-danger");
+            strengthBar.css("width", "33%");
+            strengthBar.text("Weak");
+        }
+        else if (pwd.length <= 12) {
+            strengthBar.addClass("bg-warning");
+            strengthBar.css("width", "66%");
+            strengthBar.text("Medium");
+        }
+        else {
+            strengthBar.addClass("bg-success");
+            strengthBar.css("width", "100%");
+            strengthBar.text("Strong");
+        }
+    });
+});
+</script>
+
+</body>
+</html>

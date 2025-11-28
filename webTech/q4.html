@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Admission Form</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .form-box { width: 450px; padding: 20px; border: 1px solid #ccc; }
+        .error { color: red; font-size: 14px; }
+        label { font-weight: bold; }
+        input, select, textarea {
+            width: 100%; padding: 8px; margin-top: 5px; margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Student Admission Form</h2>
+
+<div class="form-box">
+    <form id="admissionForm">
+
+        <!-- Full Name -->
+        <label>Full Name:</label>
+        <input type="text" id="name">
+        <span id="nameError" class="error"></span>
+
+        <!-- Email -->
+        <label>Email:</label>
+        <input type="text" id="email">
+        <span id="emailError" class="error"></span>
+
+        <!-- Mobile -->
+        <label>Mobile Number:</label>
+        <input type="text" id="mobile">
+        <span id="mobileError" class="error"></span>
+
+        <!-- Date of Birth -->
+        <label>Date of Birth:</label>
+        <input type="date" id="dob">
+        <span id="dobError" class="error"></span>
+
+        <!-- Address -->
+        <label>Address:</label>
+        <textarea id="address"></textarea>
+        <span id="addressError" class="error"></span>
+
+        <!-- Gender -->
+        <label>Gender:</label><br>
+        <input type="radio" name="gender" value="Male"> Male  
+        <input type="radio" name="gender" value="Female"> Female  
+        <input type="radio" name="gender" value="Other"> Other  
+        <br>
+        <span id="genderError" class="error"></span><br>
+
+        <!-- Course -->
+        <label>Course Selection:</label>
+        <select id="course">
+            <option value="">Select Course</option>
+            <option>BCA</option>
+            <option>BBA</option>
+            <option>MCA</option>
+            <option>MBA</option>
+        </select>
+        <span id="courseError" class="error"></span>
+
+        <!-- Password -->
+        <label>Password:</label>
+        <input type="password" id="password">
+        <span id="passwordError" class="error"></span>
+
+        <br><br>
+        <button type="submit">Submit</button>
+
+    </form>
+</div>
+
+<script>
+
+$(document).ready(function () {
+
+    // Function to validate each input
+    function validateName() {
+        let name = $("#name").val().trim();
+        if (name === "") {
+            $("#nameError").text("Please enter full name.");
+            return false;
+        } else {
+            $("#nameError").text("");
+            return true;
+        }
+    }
+
+    function validateEmail() {
+        let email = $("#email").val().trim();
+        let pattern = /^[^ ]+@[^ ]+\.[a-z]{2,6}$/;
+        if (email === "") {
+            $("#emailError").text("Email is required.");
+            return false;
+        } else if (!pattern.test(email)) {
+            $("#emailError").text("Enter a valid email.");
+            return false;
+        }
+        $("#emailError").text("");
+        return true;
+    }
+
+    function validateMobile() {
+        let mobile = $("#mobile").val().trim();
+        let pattern = /^[0-9]{10}$/;
+
+        if (mobile === "") {
+            $("#mobileError").text("Enter mobile number.");
+            return false;
+        } else if (!pattern.test(mobile)) {
+            $("#mobileError").text("Mobile number must be 10 digits.");
+            return false;
+        }
+        $("#mobileError").text("");
+        return true;
+    }
+
+    function validateDOB() {
+        let dob = $("#dob").val();
+        if (dob === "") {
+            $("#dobError").text("Please select date of birth.");
+            return false;
+        }
+        $("#dobError").text("");
+        return true;
+    }
+
+    function validateAddress() {
+        let address = $("#address").val().trim();
+        if (address === "") {
+            $("#addressError").text("Address cannot be empty.");
+            return false;
+        }
+        $("#addressError").text("");
+        return true;
+    }
+
+    function validateGender() {
+        if ($("input[name='gender']:checked").length === 0) {
+            $("#genderError").text("Select your gender.");
+            return false;
+        }
+        $("#genderError").text("");
+        return true;
+    }
+
+    function validateCourse() {
+        if ($("#course").val() === "") {
+            $("#courseError").text("Select a course.");
+            return false;
+        }
+        $("#courseError").text("");
+        return true;
+    }
+
+    function validatePassword() {
+        let pass = $("#password").val().trim();
+        if (pass.length < 6) {
+            $("#passwordError").text("Password must be at least 6 characters.");
+            return false;
+        }
+        $("#passwordError").text("");
+        return true;
+    }
+
+    // Real-time validation with .blur() and .keyup()
+
+    $("#name").blur(validateName);
+    $("#email").blur(validateEmail);
+    $("#mobile").blur(validateMobile);
+    $("#dob").blur(validateDOB);
+    $("#address").blur(validateAddress);
+    $("input[name='gender']").change(validateGender);
+    $("#course").change(validateCourse);
+    $("#password").keyup(validatePassword);
+
+    // Submit form
+    $("#admissionForm").submit(function (e) {
+        e.preventDefault();
+
+        if (
+            validateName() &&
+            validateEmail() &&
+            validateMobile() &&
+            validateDOB() &&
+            validateAddress() &&
+            validateGender() &&
+            validateCourse() &&
+            validatePassword()
+        ) {
+            alert("Admission Form Submitted Successfully!");
+        }
+    });
+
+});
+</script>
+
+</body>
+</html>
